@@ -6,7 +6,7 @@ v20
 mlflow==1.4.0
 minio
 boto3
-sklearn
+scikit-learn
 twilio
 slackclient
 alpaca_trade_api
