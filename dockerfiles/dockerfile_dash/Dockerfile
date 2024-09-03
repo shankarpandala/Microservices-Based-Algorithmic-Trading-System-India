@@ -14,7 +14,7 @@
 # CMD ["python", "app.py"]
 
 
-FROM python:3.7
+FROM python:3.12.5
 ADD requirements.txt /app/requirements.txt
 WORKDIR /app/
 ENV PYTHONPATH "${PYTHONPATH}:/q_pack"

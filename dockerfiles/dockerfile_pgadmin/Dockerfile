@@ -1,4 +1,4 @@
-FROM dpage/pgadmin4:4.26
+FROM dpage/pgadmin4:latest
 # ISSUES WITH pg15
 # ENV MASTER_PASSWORD_REQUIRED "False"
 ENV PGADMIN_DEFAULT_EMAIL "guest"
