@@ -17,3 +17,5 @@ gunicorn
 twilio
 selenium
 beautifulsoup4
+py5paisa
+kiteconnect

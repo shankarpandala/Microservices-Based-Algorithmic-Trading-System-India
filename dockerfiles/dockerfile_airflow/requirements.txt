@@ -14,3 +14,4 @@ flask-bcrypt
 apache-airflow[celery]
 kiteconnect
 dropbox
+py5paisa

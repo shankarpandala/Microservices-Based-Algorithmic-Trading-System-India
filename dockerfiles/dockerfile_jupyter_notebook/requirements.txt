@@ -25,3 +25,4 @@ jupyter-dash
 kiteconnect
 dropbox
 selenium
+py5paisa
