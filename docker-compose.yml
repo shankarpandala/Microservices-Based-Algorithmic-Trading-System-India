@@ -1,5 +1,3 @@
-
-version: "3.7"
 services:
     minio-image:
         container_name: minio-image
@@ -31,7 +29,6 @@ services:
             - "5500:5500"
         command: mlflow server --host 0.0.0.0 --port 5500 --backend-store-uri /mlflow-image/mlruns 
 
-
     jupyter-image:
         container_name: "jupyter-image"
         build:
@@ -48,7 +45,6 @@ services:
         ports:    
             - "8888:8888"
 
-    
     etl-image:
         container_name: "etl-image"
         build:
@@ -61,12 +57,9 @@ services:
             AWS_ACCESS_KEY_ID: minio-image
             AWS_SECRET_ACCESS_KEY: minio-image-pass    
             MLFLOW_TRACKING_URI: http://mlflow-image:5500 
-            # PORT: '66'       
         ports:    
             - "8060:8060"
         command: gunicorn -c gunicorn_config.py -b :8060 app:app
-
-            
 
     redis:
         image: redis
@@ -87,20 +80,6 @@ services:
             - ./Storage/postgress_db/scripts/:/docker-entrypoint-initdb.d/ 
             - pg_data:/var/lib/postgresql/data
 
-    pgadmin:
-        image : dpage/pgadmin4:4.18
-        container_name: pgadmin
-        environment:
-            PGADMIN_DEFAULT_EMAIL: "guest"
-            PGADMIN_DEFAULT_PASSWORD: "guest"
-            PGADMIN_LISTEN_PORT: 1234
-        volumes:
-            - ./Storage/pgadmin/:/var/lib/pgadmin 
-        ports:
-            - 1234:1234
-        depends_on:
-            - postgres_secmaster
-    
     postgres:
         image: postgres
         container_name: "airflow_postgres"
@@ -124,7 +103,6 @@ services:
             - LOAD_EX=n
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
             - EXECUTOR=Celery
-            # - EXECUTOR=Local
             - AIRFLOW__WEBSERVER__AUTHENTICATE=True
             - AIRFLOW__WEBSERVER__AUTH_BACKEND=airflow.contrib.auth.backends.password_auth
         volumes:
@@ -174,13 +152,11 @@ services:
         volumes:
             - ./Storage/airflow/dags:/usr/local/airflow/dags
             - ./Storage/q_pack:/usr/local/airflow/dags/q_pack
-
         environment:
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
             - EXECUTOR=Celery
             - C_FORCE_ROOT=true
         command: worker
-
 
     dash:
         container_name: "dash"
@@ -212,13 +188,11 @@ services:
             - "jupyter-image"
             - "airflow"
             - "mlflow-image"
-            - "pgadmin"
             - "minio-image"
         links:
             - "jupyter-image"
             - "airflow"
             - "mlflow-image"
-            - "pgadmin"
             - "minio-image"
         restart: always
 
@@ -232,6 +206,5 @@ volumes:
     redis:
         external: false
         name: redis
-
 
 # docker-compose up -d --scale worker=5

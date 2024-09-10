@@ -1,4 +1,4 @@
-FROM puckel/docker-airflow
+FROM shankarpandala/docker-airflow
 USER root
 #COPY requirements.txt /requirements.txt
 COPY requirements.txt /tmp/requirements.txt
